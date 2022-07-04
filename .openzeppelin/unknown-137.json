@@ -1,0 +1,237 @@
+{
+  "manifestVersion": "3.2",
+  "admin": {
+    "address": "0x715984cAfecb65952dcA0d3A925039375e210f37",
+    "txHash": "0x558738b372d81402a14e8e96742ae37d7402baf7b5f5c7dd441785a6828913d7"
+  },
+  "proxies": [
+    {
+      "address": "0x7D2a006aB1151101575e2a38F9Ec6De861A22D00",
+      "txHash": "0xeefbc29972d380d2435faa4a87bc19695b1de8e991611dc4e7cbc51dd0e49652",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xEB739B708456F62149bf8399B37dEACCD96e4d69",
+      "txHash": "0x305f348b29fce1e36a76c5a91355d6c5fae0cca07caee8846cb07ec6626fd7cc",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x1A53A22A582CE23878A283BfD2Df67f41af2b3A6",
+      "txHash": "0xf35bfbce93939ff0e04ac32edd45ac0614b7f4b9c9250f908efa0922f97d4b5e",
+      "kind": "transparent"
+    }
+  ],
+  "impls": {
+    "4ce72e998b05fec18dd8f139e6aca45379353fcd3c0c3560f50e03dddc2f0cfd": {
+      "address": "0xe7C0Ac93420fD84F3335Dc5270F78B03e0B07a61",
+      "txHash": "0xf75f52ead18e77c5459ac69bfeb31650af8409bdafa614be388331b91cb16cde",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:87"
+          },
+          {
+            "label": "_treasury",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_address",
+            "contract": "NiftyKitV2",
+            "src": "contracts/NiftyKitV2.sol:21"
+          },
+          {
+            "label": "_collections",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_struct(AddressSet)4578_storage",
+            "contract": "NiftyKitV2",
+            "src": "contracts/NiftyKitV2.sol:23"
+          },
+          {
+            "label": "_fees",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "NiftyKitV2",
+            "src": "contracts/NiftyKitV2.sol:24"
+          },
+          {
+            "label": "_feesClaimed",
+            "offset": 0,
+            "slot": "105",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "NiftyKitV2",
+            "src": "contracts/NiftyKitV2.sol:25"
+          },
+          {
+            "label": "_implementations",
+            "offset": 0,
+            "slot": "106",
+            "type": "t_mapping(t_uint96,t_address)",
+            "contract": "NiftyKitV2",
+            "src": "contracts/NiftyKitV2.sol:26"
+          },
+          {
+            "label": "_rateOverride",
+            "offset": 0,
+            "slot": "107",
+            "type": "t_mapping(t_address,t_struct(Entry)7809_storage)",
+            "contract": "NiftyKitV2",
+            "src": "contracts/NiftyKitV2.sol:27"
+          },
+          {
+            "label": "_dropKitPass",
+            "offset": 0,
+            "slot": "108",
+            "type": "t_contract(IDropKitPass)7802",
+            "contract": "NiftyKitV2",
+            "src": "contracts/NiftyKitV2.sol:28"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_bytes32)dyn_storage": {
+            "label": "bytes32[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_contract(IDropKitPass)7802": {
+            "label": "contract IDropKitPass",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_struct(Entry)7809_storage)": {
+            "label": "mapping(address => struct INiftyKit.Entry)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint96,t_address)": {
+            "label": "mapping(uint96 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(AddressSet)4578_storage": {
+            "label": "struct EnumerableSetUpgradeable.AddressSet",
+            "members": [
+              {
+                "label": "_inner",
+                "type": "t_struct(Set)4277_storage",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(Entry)7809_storage": {
+            "label": "struct INiftyKit.Entry",
+            "members": [
+              {
+                "label": "value",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "isValue",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(Set)4277_storage": {
+            "label": "struct EnumerableSetUpgradeable.Set",
+            "members": [
+              {
+                "label": "_values",
+                "type": "t_array(t_bytes32)dyn_storage",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_indexes",
+                "type": "t_mapping(t_bytes32,t_uint256)",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          },
+          "t_uint96": {
+            "label": "uint96",
+            "numberOfBytes": "12"
+          }
+        }
+      }
+    }
+  }
+}
