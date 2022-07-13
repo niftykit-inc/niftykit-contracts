@@ -20,6 +20,7 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
+  PromiseOrValue,
 } from "../../common";
 
 export interface IBaseCollectionInterface extends utils.Interface {
@@ -34,11 +35,17 @@ export interface IBaseCollectionInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "initialize",
-    values: [string, string, string, string, BigNumberish]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
 
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
@@ -78,46 +85,46 @@ export interface IBaseCollection extends BaseContract {
 
   functions: {
     initialize(
-      name: string,
-      symbol: string,
-      treasury: string,
-      royalty: string,
-      royaltyFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      treasury: PromiseOrValue<string>,
+      royalty: PromiseOrValue<string>,
+      royaltyFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
   initialize(
-    name: string,
-    symbol: string,
-    treasury: string,
-    royalty: string,
-    royaltyFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    name: PromiseOrValue<string>,
+    symbol: PromiseOrValue<string>,
+    treasury: PromiseOrValue<string>,
+    royalty: PromiseOrValue<string>,
+    royaltyFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     initialize(
-      name: string,
-      symbol: string,
-      treasury: string,
-      royalty: string,
-      royaltyFee: BigNumberish,
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      treasury: PromiseOrValue<string>,
+      royalty: PromiseOrValue<string>,
+      royaltyFee: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     transferOwnership(
-      newOwner: string,
+      newOwner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -126,33 +133,33 @@ export interface IBaseCollection extends BaseContract {
 
   estimateGas: {
     initialize(
-      name: string,
-      symbol: string,
-      treasury: string,
-      royalty: string,
-      royaltyFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      treasury: PromiseOrValue<string>,
+      royalty: PromiseOrValue<string>,
+      royaltyFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     initialize(
-      name: string,
-      symbol: string,
-      treasury: string,
-      royalty: string,
-      royaltyFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      treasury: PromiseOrValue<string>,
+      royalty: PromiseOrValue<string>,
+      royaltyFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

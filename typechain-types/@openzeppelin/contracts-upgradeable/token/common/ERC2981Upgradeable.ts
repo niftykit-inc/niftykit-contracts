@@ -22,6 +22,7 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
+  PromiseOrValue,
 } from "../../../../common";
 
 export interface ERC2981UpgradeableInterface extends utils.Interface {
@@ -36,11 +37,11 @@ export interface ERC2981UpgradeableInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "royaltyInfo",
-    values: [BigNumberish, BigNumberish]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
-    values: [BytesLike]
+    values: [PromiseOrValue<BytesLike>]
   ): string;
 
   decodeFunctionResult(
@@ -94,37 +95,37 @@ export interface ERC2981Upgradeable extends BaseContract {
 
   functions: {
     royaltyInfo(
-      _tokenId: BigNumberish,
-      _salePrice: BigNumberish,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string, BigNumber]>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
   };
 
   royaltyInfo(
-    _tokenId: BigNumberish,
-    _salePrice: BigNumberish,
+    _tokenId: PromiseOrValue<BigNumberish>,
+    _salePrice: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<[string, BigNumber]>;
 
   supportsInterface(
-    interfaceId: BytesLike,
+    interfaceId: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   callStatic: {
     royaltyInfo(
-      _tokenId: BigNumberish,
-      _salePrice: BigNumberish,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string, BigNumber]>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<boolean>;
   };
@@ -136,26 +137,26 @@ export interface ERC2981Upgradeable extends BaseContract {
 
   estimateGas: {
     royaltyInfo(
-      _tokenId: BigNumberish,
-      _salePrice: BigNumberish,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     royaltyInfo(
-      _tokenId: BigNumberish,
-      _salePrice: BigNumberish,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

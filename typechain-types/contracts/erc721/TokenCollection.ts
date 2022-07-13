@@ -25,19 +25,20 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
+  PromiseOrValue,
 } from "../../common";
 
 export declare namespace Redeemables {
   export type RedeemableStruct = {
-    tokenURI: string;
-    price: BigNumberish;
-    maxQuantity: BigNumberish;
-    maxPerWallet: BigNumberish;
-    maxPerMint: BigNumberish;
-    redeemedCount: BigNumberish;
-    merkleRoot: BytesLike;
-    active: boolean;
-    nonce: BigNumberish;
+    tokenURI: PromiseOrValue<string>;
+    price: PromiseOrValue<BigNumberish>;
+    maxQuantity: PromiseOrValue<BigNumberish>;
+    maxPerWallet: PromiseOrValue<BigNumberish>;
+    maxPerMint: PromiseOrValue<BigNumberish>;
+    redeemedCount: PromiseOrValue<BigNumberish>;
+    merkleRoot: PromiseOrValue<BytesLike>;
+    active: PromiseOrValue<boolean>;
+    nonce: PromiseOrValue<BigNumberish>;
   };
 
   export type RedeemableStructOutput = [
@@ -147,51 +148,82 @@ export interface TokenCollectionInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "approve",
-    values: [string, BigNumberish]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
-  encodeFunctionData(functionFragment: "burn", values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: "balanceOf",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "burn",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
   encodeFunctionData(
     functionFragment: "createRedeemable",
-    values: [string, BigNumberish, BigNumberish, BigNumberish, BigNumberish]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "getApproved",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
-    values: [string, string, string, string, BigNumberish]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "invalidate",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
-    values: [string, string]
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "mint",
-    values: [string, BigNumberish, string]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "ownerOf",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "redeem(uint256,uint256,bytes)",
-    values: [BigNumberish, BigNumberish, BytesLike]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "redeem(uint256,uint256,bytes,bytes32[])",
-    values: [BigNumberish, BigNumberish, BytesLike, BytesLike[]]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>[]
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "redeemableAt",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
@@ -199,53 +231,69 @@ export interface TokenCollectionInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "revoke",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "royaltyInfo",
-    values: [BigNumberish, BigNumberish]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "safeTransferFrom(address,address,uint256)",
-    values: [string, string, BigNumberish]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "safeTransferFrom(address,address,uint256,bytes)",
-    values: [string, string, BigNumberish, BytesLike]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "setApprovalForAll",
-    values: [string, boolean]
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
     functionFragment: "setDefaultRoyalty",
-    values: [string, BigNumberish]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "setMerkleRoot",
-    values: [BigNumberish, BytesLike]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
     functionFragment: "setTokenRoyalty",
-    values: [BigNumberish, string, BigNumberish]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
-  encodeFunctionData(functionFragment: "setTreasury", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "setTreasury",
+    values: [PromiseOrValue<string>]
+  ): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
-    values: [BytesLike]
+    values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "tokenByIndex",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "tokenOfOwnerByIndex",
-    values: [string, BigNumberish]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "tokenURI",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "totalRedeemables",
@@ -261,11 +309,15 @@ export interface TokenCollectionInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "transferFrom",
-    values: [string, string, BigNumberish]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: "treasury", values?: undefined): string;
   encodeFunctionData(functionFragment: "withdraw", values?: undefined): string;
@@ -502,57 +554,60 @@ export interface TokenCollection extends BaseContract {
 
   functions: {
     approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(
+      owner: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     burn(
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     createRedeemable(
-      uri: string,
-      price: BigNumberish,
-      maxQuantity: BigNumberish,
-      maxPerWallet: BigNumberish,
-      maxPerMint: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      uri: PromiseOrValue<string>,
+      price: PromiseOrValue<BigNumberish>,
+      maxQuantity: PromiseOrValue<BigNumberish>,
+      maxPerWallet: PromiseOrValue<BigNumberish>,
+      maxPerMint: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     getApproved(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
     initialize(
-      name_: string,
-      symbol_: string,
-      treasury_: string,
-      royalty_: string,
-      royaltyFee_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name_: PromiseOrValue<string>,
+      symbol_: PromiseOrValue<string>,
+      treasury_: PromiseOrValue<string>,
+      royalty_: PromiseOrValue<string>,
+      royaltyFee_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     invalidate(
-      redeemableId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      redeemableId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     isApprovedForAll(
-      owner: string,
-      operator: string,
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     mint(
-      to: string,
-      quantity: BigNumberish,
-      uri: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      quantity: PromiseOrValue<BigNumberish>,
+      uri: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
@@ -560,27 +615,27 @@ export interface TokenCollection extends BaseContract {
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     ownerOf(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
     "redeem(uint256,uint256,bytes)"(
-      redeemableId: BigNumberish,
-      quantity: BigNumberish,
-      signature: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      redeemableId: PromiseOrValue<BigNumberish>,
+      quantity: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     "redeem(uint256,uint256,bytes,bytes32[])"(
-      redeemableId: BigNumberish,
-      quantity: BigNumberish,
-      signature: BytesLike,
-      proof: BytesLike[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      redeemableId: PromiseOrValue<BigNumberish>,
+      quantity: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      proof: PromiseOrValue<BytesLike>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     redeemableAt(
-      index: BigNumberish,
+      index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
       [Redeemables.RedeemableStructOutput] & {
@@ -589,85 +644,85 @@ export interface TokenCollection extends BaseContract {
     >;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     revoke(
-      redeemableId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      redeemableId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     royaltyInfo(
-      _tokenId: BigNumberish,
-      _salePrice: BigNumberish,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string, BigNumber]>;
 
     "safeTransferFrom(address,address,uint256)"(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     "safeTransferFrom(address,address,uint256,bytes)"(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setDefaultRoyalty(
-      receiver: string,
-      feeNumerator: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      receiver: PromiseOrValue<string>,
+      feeNumerator: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setMerkleRoot(
-      redeemableId: BigNumberish,
-      newRoot: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      redeemableId: PromiseOrValue<BigNumberish>,
+      newRoot: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setTokenRoyalty(
-      tokenId: BigNumberish,
-      receiver: string,
-      feeNumerator: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      feeNumerator: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setTreasury(
-      newTreasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newTreasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
     tokenByIndex(
-      index: BigNumberish,
+      index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     tokenOfOwnerByIndex(
-      owner: string,
-      index: BigNumberish,
+      owner: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     tokenURI(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
@@ -678,183 +733,192 @@ export interface TokenCollection extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<[string]>;
 
     withdraw(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
   approve(
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(
+    owner: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   burn(
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   createRedeemable(
-    uri: string,
-    price: BigNumberish,
-    maxQuantity: BigNumberish,
-    maxPerWallet: BigNumberish,
-    maxPerMint: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    uri: PromiseOrValue<string>,
+    price: PromiseOrValue<BigNumberish>,
+    maxQuantity: PromiseOrValue<BigNumberish>,
+    maxPerWallet: PromiseOrValue<BigNumberish>,
+    maxPerMint: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   getApproved(
-    tokenId: BigNumberish,
+    tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<string>;
 
   initialize(
-    name_: string,
-    symbol_: string,
-    treasury_: string,
-    royalty_: string,
-    royaltyFee_: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    name_: PromiseOrValue<string>,
+    symbol_: PromiseOrValue<string>,
+    treasury_: PromiseOrValue<string>,
+    royalty_: PromiseOrValue<string>,
+    royaltyFee_: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   invalidate(
-    redeemableId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    redeemableId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   isApprovedForAll(
-    owner: string,
-    operator: string,
+    owner: PromiseOrValue<string>,
+    operator: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   mint(
-    to: string,
-    quantity: BigNumberish,
-    uri: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    to: PromiseOrValue<string>,
+    quantity: PromiseOrValue<BigNumberish>,
+    uri: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  ownerOf(
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>;
 
   "redeem(uint256,uint256,bytes)"(
-    redeemableId: BigNumberish,
-    quantity: BigNumberish,
-    signature: BytesLike,
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
+    redeemableId: PromiseOrValue<BigNumberish>,
+    quantity: PromiseOrValue<BigNumberish>,
+    signature: PromiseOrValue<BytesLike>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   "redeem(uint256,uint256,bytes,bytes32[])"(
-    redeemableId: BigNumberish,
-    quantity: BigNumberish,
-    signature: BytesLike,
-    proof: BytesLike[],
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
+    redeemableId: PromiseOrValue<BigNumberish>,
+    quantity: PromiseOrValue<BigNumberish>,
+    signature: PromiseOrValue<BytesLike>,
+    proof: PromiseOrValue<BytesLike>[],
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   redeemableAt(
-    index: BigNumberish,
+    index: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<Redeemables.RedeemableStructOutput>;
 
   renounceOwnership(
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   revoke(
-    redeemableId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    redeemableId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   royaltyInfo(
-    _tokenId: BigNumberish,
-    _salePrice: BigNumberish,
+    _tokenId: PromiseOrValue<BigNumberish>,
+    _salePrice: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<[string, BigNumber]>;
 
   "safeTransferFrom(address,address,uint256)"(
-    from: string,
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   "safeTransferFrom(address,address,uint256,bytes)"(
-    from: string,
-    to: string,
-    tokenId: BigNumberish,
-    _data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setApprovalForAll(
-    operator: string,
-    approved: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    operator: PromiseOrValue<string>,
+    approved: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setDefaultRoyalty(
-    receiver: string,
-    feeNumerator: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    receiver: PromiseOrValue<string>,
+    feeNumerator: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setMerkleRoot(
-    redeemableId: BigNumberish,
-    newRoot: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    redeemableId: PromiseOrValue<BigNumberish>,
+    newRoot: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setTokenRoyalty(
-    tokenId: BigNumberish,
-    receiver: string,
-    feeNumerator: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    tokenId: PromiseOrValue<BigNumberish>,
+    receiver: PromiseOrValue<string>,
+    feeNumerator: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setTreasury(
-    newTreasury: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    newTreasury: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   supportsInterface(
-    interfaceId: BytesLike,
+    interfaceId: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
   tokenByIndex(
-    index: BigNumberish,
+    index: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   tokenOfOwnerByIndex(
-    owner: string,
-    index: BigNumberish,
+    owner: PromiseOrValue<string>,
+    index: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  tokenURI(
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>;
 
   totalRedeemables(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -863,72 +927,78 @@ export interface TokenCollection extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferFrom(
-    from: string,
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   treasury(overrides?: CallOverrides): Promise<string>;
 
   withdraw(
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     approve(
-      to: string,
-      tokenId: BigNumberish,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(
+      owner: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    burn(tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    burn(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     createRedeemable(
-      uri: string,
-      price: BigNumberish,
-      maxQuantity: BigNumberish,
-      maxPerWallet: BigNumberish,
-      maxPerMint: BigNumberish,
+      uri: PromiseOrValue<string>,
+      price: PromiseOrValue<BigNumberish>,
+      maxQuantity: PromiseOrValue<BigNumberish>,
+      maxPerWallet: PromiseOrValue<BigNumberish>,
+      maxPerMint: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     getApproved(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
 
     initialize(
-      name_: string,
-      symbol_: string,
-      treasury_: string,
-      royalty_: string,
-      royaltyFee_: BigNumberish,
+      name_: PromiseOrValue<string>,
+      symbol_: PromiseOrValue<string>,
+      treasury_: PromiseOrValue<string>,
+      royalty_: PromiseOrValue<string>,
+      royaltyFee_: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     invalidate(
-      redeemableId: BigNumberish,
+      redeemableId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     isApprovedForAll(
-      owner: string,
-      operator: string,
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     mint(
-      to: string,
-      quantity: BigNumberish,
-      uri: string,
+      to: PromiseOrValue<string>,
+      quantity: PromiseOrValue<BigNumberish>,
+      uri: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -936,102 +1006,111 @@ export interface TokenCollection extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    ownerOf(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     "redeem(uint256,uint256,bytes)"(
-      redeemableId: BigNumberish,
-      quantity: BigNumberish,
-      signature: BytesLike,
+      redeemableId: PromiseOrValue<BigNumberish>,
+      quantity: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     "redeem(uint256,uint256,bytes,bytes32[])"(
-      redeemableId: BigNumberish,
-      quantity: BigNumberish,
-      signature: BytesLike,
-      proof: BytesLike[],
+      redeemableId: PromiseOrValue<BigNumberish>,
+      quantity: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      proof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides
     ): Promise<void>;
 
     redeemableAt(
-      index: BigNumberish,
+      index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<Redeemables.RedeemableStructOutput>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     revoke(
-      redeemableId: BigNumberish,
+      redeemableId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     royaltyInfo(
-      _tokenId: BigNumberish,
-      _salePrice: BigNumberish,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string, BigNumber]>;
 
     "safeTransferFrom(address,address,uint256)"(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     "safeTransferFrom(address,address,uint256,bytes)"(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setDefaultRoyalty(
-      receiver: string,
-      feeNumerator: BigNumberish,
+      receiver: PromiseOrValue<string>,
+      feeNumerator: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setMerkleRoot(
-      redeemableId: BigNumberish,
-      newRoot: BytesLike,
+      redeemableId: PromiseOrValue<BigNumberish>,
+      newRoot: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setTokenRoyalty(
-      tokenId: BigNumberish,
-      receiver: string,
-      feeNumerator: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      feeNumerator: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setTreasury(newTreasury: string, overrides?: CallOverrides): Promise<void>;
+    setTreasury(
+      newTreasury: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
     tokenByIndex(
-      index: BigNumberish,
+      index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     tokenOfOwnerByIndex(
-      owner: string,
-      index: BigNumberish,
+      owner: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    tokenURI(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     totalRedeemables(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1040,14 +1119,14 @@ export interface TokenCollection extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     transferOwnership(
-      newOwner: string,
+      newOwner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1058,24 +1137,24 @@ export interface TokenCollection extends BaseContract {
 
   filters: {
     "Approval(address,address,uint256)"(
-      owner?: string | null,
-      approved?: string | null,
-      tokenId?: BigNumberish | null
+      owner?: PromiseOrValue<string> | null,
+      approved?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null
     ): ApprovalEventFilter;
     Approval(
-      owner?: string | null,
-      approved?: string | null,
-      tokenId?: BigNumberish | null
+      owner?: PromiseOrValue<string> | null,
+      approved?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null
     ): ApprovalEventFilter;
 
     "ApprovalForAll(address,address,bool)"(
-      owner?: string | null,
-      operator?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      operator?: PromiseOrValue<string> | null,
       approved?: null
     ): ApprovalForAllEventFilter;
     ApprovalForAll(
-      owner?: string | null,
-      operator?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      operator?: PromiseOrValue<string> | null,
       approved?: null
     ): ApprovalForAllEventFilter;
 
@@ -1083,97 +1162,100 @@ export interface TokenCollection extends BaseContract {
     Initialized(version?: null): InitializedEventFilter;
 
     "OwnershipTransferred(address,address)"(
-      previousOwner?: string | null,
-      newOwner?: string | null
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
-      previousOwner?: string | null,
-      newOwner?: string | null
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
 
     "RedeemableCreated(uint256)"(
-      redeemableId?: BigNumberish | null
+      redeemableId?: PromiseOrValue<BigNumberish> | null
     ): RedeemableCreatedEventFilter;
     RedeemableCreated(
-      redeemableId?: BigNumberish | null
+      redeemableId?: PromiseOrValue<BigNumberish> | null
     ): RedeemableCreatedEventFilter;
 
     "TokenRedeemed(address,uint256,uint256)"(
-      to?: string | null,
-      redeemableId?: BigNumberish | null,
+      to?: PromiseOrValue<string> | null,
+      redeemableId?: PromiseOrValue<BigNumberish> | null,
       quantity?: null
     ): TokenRedeemedEventFilter;
     TokenRedeemed(
-      to?: string | null,
-      redeemableId?: BigNumberish | null,
+      to?: PromiseOrValue<string> | null,
+      redeemableId?: PromiseOrValue<BigNumberish> | null,
       quantity?: null
     ): TokenRedeemedEventFilter;
 
     "Transfer(address,address,uint256)"(
-      from?: string | null,
-      to?: string | null,
-      tokenId?: BigNumberish | null
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null
     ): TransferEventFilter;
     Transfer(
-      from?: string | null,
-      to?: string | null,
-      tokenId?: BigNumberish | null
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null
     ): TransferEventFilter;
   };
 
   estimateGas: {
     approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(
+      owner: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     burn(
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     createRedeemable(
-      uri: string,
-      price: BigNumberish,
-      maxQuantity: BigNumberish,
-      maxPerWallet: BigNumberish,
-      maxPerMint: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      uri: PromiseOrValue<string>,
+      price: PromiseOrValue<BigNumberish>,
+      maxQuantity: PromiseOrValue<BigNumberish>,
+      maxPerWallet: PromiseOrValue<BigNumberish>,
+      maxPerMint: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     getApproved(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     initialize(
-      name_: string,
-      symbol_: string,
-      treasury_: string,
-      royalty_: string,
-      royaltyFee_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name_: PromiseOrValue<string>,
+      symbol_: PromiseOrValue<string>,
+      treasury_: PromiseOrValue<string>,
+      royalty_: PromiseOrValue<string>,
+      royaltyFee_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     invalidate(
-      redeemableId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      redeemableId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     isApprovedForAll(
-      owner: string,
-      operator: string,
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     mint(
-      to: string,
-      quantity: BigNumberish,
-      uri: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      quantity: PromiseOrValue<BigNumberish>,
+      uri: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1181,110 +1263,110 @@ export interface TokenCollection extends BaseContract {
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     ownerOf(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     "redeem(uint256,uint256,bytes)"(
-      redeemableId: BigNumberish,
-      quantity: BigNumberish,
-      signature: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      redeemableId: PromiseOrValue<BigNumberish>,
+      quantity: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     "redeem(uint256,uint256,bytes,bytes32[])"(
-      redeemableId: BigNumberish,
-      quantity: BigNumberish,
-      signature: BytesLike,
-      proof: BytesLike[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      redeemableId: PromiseOrValue<BigNumberish>,
+      quantity: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      proof: PromiseOrValue<BytesLike>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     redeemableAt(
-      index: BigNumberish,
+      index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     revoke(
-      redeemableId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      redeemableId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     royaltyInfo(
-      _tokenId: BigNumberish,
-      _salePrice: BigNumberish,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     "safeTransferFrom(address,address,uint256)"(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     "safeTransferFrom(address,address,uint256,bytes)"(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setDefaultRoyalty(
-      receiver: string,
-      feeNumerator: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      receiver: PromiseOrValue<string>,
+      feeNumerator: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setMerkleRoot(
-      redeemableId: BigNumberish,
-      newRoot: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      redeemableId: PromiseOrValue<BigNumberish>,
+      newRoot: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setTokenRoyalty(
-      tokenId: BigNumberish,
-      receiver: string,
-      feeNumerator: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      feeNumerator: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setTreasury(
-      newTreasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newTreasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     tokenByIndex(
-      index: BigNumberish,
+      index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     tokenOfOwnerByIndex(
-      owner: string,
-      index: BigNumberish,
+      owner: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     tokenURI(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1295,80 +1377,80 @@ export interface TokenCollection extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     treasury(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     balanceOf(
-      owner: string,
+      owner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     burn(
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     createRedeemable(
-      uri: string,
-      price: BigNumberish,
-      maxQuantity: BigNumberish,
-      maxPerWallet: BigNumberish,
-      maxPerMint: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      uri: PromiseOrValue<string>,
+      price: PromiseOrValue<BigNumberish>,
+      maxQuantity: PromiseOrValue<BigNumberish>,
+      maxPerWallet: PromiseOrValue<BigNumberish>,
+      maxPerMint: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     getApproved(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      name_: string,
-      symbol_: string,
-      treasury_: string,
-      royalty_: string,
-      royaltyFee_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name_: PromiseOrValue<string>,
+      symbol_: PromiseOrValue<string>,
+      treasury_: PromiseOrValue<string>,
+      royalty_: PromiseOrValue<string>,
+      royaltyFee_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     invalidate(
-      redeemableId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      redeemableId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
-      owner: string,
-      operator: string,
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     mint(
-      to: string,
-      quantity: BigNumberish,
-      uri: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      quantity: PromiseOrValue<BigNumberish>,
+      uri: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1376,110 +1458,110 @@ export interface TokenCollection extends BaseContract {
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ownerOf(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     "redeem(uint256,uint256,bytes)"(
-      redeemableId: BigNumberish,
-      quantity: BigNumberish,
-      signature: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      redeemableId: PromiseOrValue<BigNumberish>,
+      quantity: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     "redeem(uint256,uint256,bytes,bytes32[])"(
-      redeemableId: BigNumberish,
-      quantity: BigNumberish,
-      signature: BytesLike,
-      proof: BytesLike[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      redeemableId: PromiseOrValue<BigNumberish>,
+      quantity: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      proof: PromiseOrValue<BytesLike>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     redeemableAt(
-      index: BigNumberish,
+      index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     revoke(
-      redeemableId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      redeemableId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     royaltyInfo(
-      _tokenId: BigNumberish,
-      _salePrice: BigNumberish,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     "safeTransferFrom(address,address,uint256)"(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     "safeTransferFrom(address,address,uint256,bytes)"(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setDefaultRoyalty(
-      receiver: string,
-      feeNumerator: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      receiver: PromiseOrValue<string>,
+      feeNumerator: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setMerkleRoot(
-      redeemableId: BigNumberish,
-      newRoot: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      redeemableId: PromiseOrValue<BigNumberish>,
+      newRoot: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setTokenRoyalty(
-      tokenId: BigNumberish,
-      receiver: string,
-      feeNumerator: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      feeNumerator: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setTreasury(
-      newTreasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newTreasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     tokenByIndex(
-      index: BigNumberish,
+      index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     tokenOfOwnerByIndex(
-      owner: string,
-      index: BigNumberish,
+      owner: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     tokenURI(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1490,21 +1572,21 @@ export interface TokenCollection extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -22,19 +22,20 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
+  PromiseOrValue,
 } from "../common";
 
 export declare namespace Redeemables {
   export type RedeemableStruct = {
-    tokenURI: string;
-    price: BigNumberish;
-    maxQuantity: BigNumberish;
-    maxPerWallet: BigNumberish;
-    maxPerMint: BigNumberish;
-    redeemedCount: BigNumberish;
-    merkleRoot: BytesLike;
-    active: boolean;
-    nonce: BigNumberish;
+    tokenURI: PromiseOrValue<string>;
+    price: PromiseOrValue<BigNumberish>;
+    maxQuantity: PromiseOrValue<BigNumberish>;
+    maxPerWallet: PromiseOrValue<BigNumberish>;
+    maxPerMint: PromiseOrValue<BigNumberish>;
+    redeemedCount: PromiseOrValue<BigNumberish>;
+    merkleRoot: PromiseOrValue<BytesLike>;
+    active: PromiseOrValue<boolean>;
+    nonce: PromiseOrValue<BigNumberish>;
   };
 
   export type RedeemableStructOutput = [
@@ -72,7 +73,7 @@ export interface RedeemablesInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "redeemableAt",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "totalRedeemables",
@@ -157,7 +158,7 @@ export interface Redeemables extends BaseContract {
 
   functions: {
     redeemableAt(
-      index: BigNumberish,
+      index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
       [Redeemables.RedeemableStructOutput] & {
@@ -169,7 +170,7 @@ export interface Redeemables extends BaseContract {
   };
 
   redeemableAt(
-    index: BigNumberish,
+    index: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<Redeemables.RedeemableStructOutput>;
 
@@ -177,7 +178,7 @@ export interface Redeemables extends BaseContract {
 
   callStatic: {
     redeemableAt(
-      index: BigNumberish,
+      index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<Redeemables.RedeemableStructOutput>;
 
@@ -189,27 +190,27 @@ export interface Redeemables extends BaseContract {
     Initialized(version?: null): InitializedEventFilter;
 
     "RedeemableCreated(uint256)"(
-      redeemableId?: BigNumberish | null
+      redeemableId?: PromiseOrValue<BigNumberish> | null
     ): RedeemableCreatedEventFilter;
     RedeemableCreated(
-      redeemableId?: BigNumberish | null
+      redeemableId?: PromiseOrValue<BigNumberish> | null
     ): RedeemableCreatedEventFilter;
 
     "TokenRedeemed(address,uint256,uint256)"(
-      to?: string | null,
-      redeemableId?: BigNumberish | null,
+      to?: PromiseOrValue<string> | null,
+      redeemableId?: PromiseOrValue<BigNumberish> | null,
       quantity?: null
     ): TokenRedeemedEventFilter;
     TokenRedeemed(
-      to?: string | null,
-      redeemableId?: BigNumberish | null,
+      to?: PromiseOrValue<string> | null,
+      redeemableId?: PromiseOrValue<BigNumberish> | null,
       quantity?: null
     ): TokenRedeemedEventFilter;
   };
 
   estimateGas: {
     redeemableAt(
-      index: BigNumberish,
+      index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -218,7 +219,7 @@ export interface Redeemables extends BaseContract {
 
   populateTransaction: {
     redeemableAt(
-      index: BigNumberish,
+      index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

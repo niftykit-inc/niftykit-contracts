@@ -20,6 +20,7 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
+  PromiseOrValue,
 } from "../../common";
 
 export interface IDropKitPassInterface extends utils.Interface {
@@ -42,23 +43,29 @@ export interface IDropKitPassInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "batchAirdrop",
-    values: [string[], BigNumberish[]]
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]]
   ): string;
   encodeFunctionData(
     functionFragment: "getFeeRate",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "getFeeRateOf",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
-    values: [string, string, string, string, BigNumberish]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "mint",
-    values: [string, BigNumberish]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
 
   decodeFunctionResult(
@@ -104,91 +111,97 @@ export interface IDropKitPass extends BaseContract {
 
   functions: {
     batchAirdrop(
-      recipients: string[],
-      feeRates: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      recipients: PromiseOrValue<string>[],
+      feeRates: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     getFeeRate(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     getFeeRateOf(
-      owner: string,
+      owner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     initialize(
-      name: string,
-      symbol: string,
-      treasury: string,
-      royalty: string,
-      royaltyFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      treasury: PromiseOrValue<string>,
+      royalty: PromiseOrValue<string>,
+      royaltyFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     mint(
-      to: string,
-      feeRate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      feeRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
   batchAirdrop(
-    recipients: string[],
-    feeRates: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> }
+    recipients: PromiseOrValue<string>[],
+    feeRates: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   getFeeRate(
-    tokenId: BigNumberish,
+    tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  getFeeRateOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getFeeRateOf(
+    owner: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   initialize(
-    name: string,
-    symbol: string,
-    treasury: string,
-    royalty: string,
-    royaltyFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    name: PromiseOrValue<string>,
+    symbol: PromiseOrValue<string>,
+    treasury: PromiseOrValue<string>,
+    royalty: PromiseOrValue<string>,
+    royaltyFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   mint(
-    to: string,
-    feeRate: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    to: PromiseOrValue<string>,
+    feeRate: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     batchAirdrop(
-      recipients: string[],
-      feeRates: BigNumberish[],
+      recipients: PromiseOrValue<string>[],
+      feeRates: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides
     ): Promise<void>;
 
     getFeeRate(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getFeeRateOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getFeeRateOf(
+      owner: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     initialize(
-      name: string,
-      symbol: string,
-      treasury: string,
-      royalty: string,
-      royaltyFee: BigNumberish,
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      treasury: PromiseOrValue<string>,
+      royalty: PromiseOrValue<string>,
+      royaltyFee: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     mint(
-      to: string,
-      feeRate: BigNumberish,
+      to: PromiseOrValue<string>,
+      feeRate: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -197,64 +210,67 @@ export interface IDropKitPass extends BaseContract {
 
   estimateGas: {
     batchAirdrop(
-      recipients: string[],
-      feeRates: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      recipients: PromiseOrValue<string>[],
+      feeRates: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     getFeeRate(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getFeeRateOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getFeeRateOf(
+      owner: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     initialize(
-      name: string,
-      symbol: string,
-      treasury: string,
-      royalty: string,
-      royaltyFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      treasury: PromiseOrValue<string>,
+      royalty: PromiseOrValue<string>,
+      royaltyFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     mint(
-      to: string,
-      feeRate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      feeRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     batchAirdrop(
-      recipients: string[],
-      feeRates: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      recipients: PromiseOrValue<string>[],
+      feeRates: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     getFeeRate(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getFeeRateOf(
-      owner: string,
+      owner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      name: string,
-      symbol: string,
-      treasury: string,
-      royalty: string,
-      royaltyFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      treasury: PromiseOrValue<string>,
+      royalty: PromiseOrValue<string>,
+      royaltyFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     mint(
-      to: string,
-      feeRate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      feeRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

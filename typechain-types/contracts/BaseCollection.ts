@@ -24,6 +24,7 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
+  PromiseOrValue,
 } from "../common";
 
 export interface BaseCollectionInterface extends utils.Interface {
@@ -60,7 +61,13 @@ export interface BaseCollectionInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "initialize",
-    values: [string, string, string, string, BigNumberish]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -69,20 +76,27 @@ export interface BaseCollectionInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "royaltyInfo",
-    values: [BigNumberish, BigNumberish]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "setDefaultRoyalty",
-    values: [string, BigNumberish]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "setTokenRoyalty",
-    values: [BigNumberish, string, BigNumberish]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
-  encodeFunctionData(functionFragment: "setTreasury", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "setTreasury",
+    values: [PromiseOrValue<string>]
+  ): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
-    values: [BytesLike]
+    values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
     functionFragment: "totalRevenue",
@@ -90,7 +104,7 @@ export interface BaseCollectionInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: "treasury", values?: undefined): string;
   encodeFunctionData(functionFragment: "withdraw", values?: undefined): string;
@@ -188,127 +202,127 @@ export interface BaseCollection extends BaseContract {
 
   functions: {
     initialize(
-      name: string,
-      symbol: string,
-      treasury: string,
-      royalty: string,
-      royaltyFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      treasury: PromiseOrValue<string>,
+      royalty: PromiseOrValue<string>,
+      royaltyFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     royaltyInfo(
-      _tokenId: BigNumberish,
-      _salePrice: BigNumberish,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string, BigNumber]>;
 
     setDefaultRoyalty(
-      receiver: string,
-      feeNumerator: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      receiver: PromiseOrValue<string>,
+      feeNumerator: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setTokenRoyalty(
-      tokenId: BigNumberish,
-      receiver: string,
-      feeNumerator: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      feeNumerator: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setTreasury(
-      newTreasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newTreasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     totalRevenue(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<[string]>;
 
     withdraw(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
   initialize(
-    name: string,
-    symbol: string,
-    treasury: string,
-    royalty: string,
-    royaltyFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    name: PromiseOrValue<string>,
+    symbol: PromiseOrValue<string>,
+    treasury: PromiseOrValue<string>,
+    royalty: PromiseOrValue<string>,
+    royaltyFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   renounceOwnership(
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   royaltyInfo(
-    _tokenId: BigNumberish,
-    _salePrice: BigNumberish,
+    _tokenId: PromiseOrValue<BigNumberish>,
+    _salePrice: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<[string, BigNumber]>;
 
   setDefaultRoyalty(
-    receiver: string,
-    feeNumerator: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    receiver: PromiseOrValue<string>,
+    feeNumerator: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setTokenRoyalty(
-    tokenId: BigNumberish,
-    receiver: string,
-    feeNumerator: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    tokenId: PromiseOrValue<BigNumberish>,
+    receiver: PromiseOrValue<string>,
+    feeNumerator: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setTreasury(
-    newTreasury: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    newTreasury: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   supportsInterface(
-    interfaceId: BytesLike,
+    interfaceId: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   totalRevenue(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   treasury(overrides?: CallOverrides): Promise<string>;
 
   withdraw(
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     initialize(
-      name: string,
-      symbol: string,
-      treasury: string,
-      royalty: string,
-      royaltyFee: BigNumberish,
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      treasury: PromiseOrValue<string>,
+      royalty: PromiseOrValue<string>,
+      royaltyFee: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -317,35 +331,38 @@ export interface BaseCollection extends BaseContract {
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     royaltyInfo(
-      _tokenId: BigNumberish,
-      _salePrice: BigNumberish,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string, BigNumber]>;
 
     setDefaultRoyalty(
-      receiver: string,
-      feeNumerator: BigNumberish,
+      receiver: PromiseOrValue<string>,
+      feeNumerator: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setTokenRoyalty(
-      tokenId: BigNumberish,
-      receiver: string,
-      feeNumerator: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      feeNumerator: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setTreasury(newTreasury: string, overrides?: CallOverrides): Promise<void>;
+    setTreasury(
+      newTreasury: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     totalRevenue(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
+      newOwner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -359,130 +376,130 @@ export interface BaseCollection extends BaseContract {
     Initialized(version?: null): InitializedEventFilter;
 
     "OwnershipTransferred(address,address)"(
-      previousOwner?: string | null,
-      newOwner?: string | null
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
-      previousOwner?: string | null,
-      newOwner?: string | null
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
     initialize(
-      name: string,
-      symbol: string,
-      treasury: string,
-      royalty: string,
-      royaltyFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      treasury: PromiseOrValue<string>,
+      royalty: PromiseOrValue<string>,
+      royaltyFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     royaltyInfo(
-      _tokenId: BigNumberish,
-      _salePrice: BigNumberish,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     setDefaultRoyalty(
-      receiver: string,
-      feeNumerator: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      receiver: PromiseOrValue<string>,
+      feeNumerator: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setTokenRoyalty(
-      tokenId: BigNumberish,
-      receiver: string,
-      feeNumerator: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      feeNumerator: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setTreasury(
-      newTreasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newTreasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     totalRevenue(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     treasury(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     initialize(
-      name: string,
-      symbol: string,
-      treasury: string,
-      royalty: string,
-      royaltyFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      treasury: PromiseOrValue<string>,
+      royalty: PromiseOrValue<string>,
+      royaltyFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     royaltyInfo(
-      _tokenId: BigNumberish,
-      _salePrice: BigNumberish,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     setDefaultRoyalty(
-      receiver: string,
-      feeNumerator: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      receiver: PromiseOrValue<string>,
+      feeNumerator: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setTokenRoyalty(
-      tokenId: BigNumberish,
-      receiver: string,
-      feeNumerator: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      feeNumerator: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setTreasury(
-      newTreasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newTreasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     totalRevenue(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

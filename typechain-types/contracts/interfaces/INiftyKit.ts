@@ -24,6 +24,7 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
+  PromiseOrValue,
 } from "../../common";
 
 export interface INiftyKitInterface extends utils.Interface {
@@ -44,17 +45,20 @@ export interface INiftyKitInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "addFees",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "addFeesClaimed",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "commission",
-    values: [string, BigNumberish]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(functionFragment: "getFees", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "getFees",
+    values: [PromiseOrValue<string>]
+  ): string;
 
   decodeFunctionResult(functionFragment: "addFees", data: BytesLike): Result;
   decodeFunctionResult(
@@ -111,109 +115,124 @@ export interface INiftyKit extends BaseContract {
 
   functions: {
     addFees(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     addFeesClaimed(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     commission(
-      collection: string,
-      amount: BigNumberish,
+      collection: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    getFees(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getFees(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
   };
 
   addFees(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   addFeesClaimed(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   commission(
-    collection: string,
-    amount: BigNumberish,
+    collection: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  getFees(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getFees(
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   callStatic: {
-    addFees(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    addFees(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     addFeesClaimed(
-      amount: BigNumberish,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     commission(
-      collection: string,
-      amount: BigNumberish,
+      collection: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getFees(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getFees(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
   };
 
   filters: {
     "CollectionCreated(uint96,address)"(
-      typeId?: BigNumberish | null,
-      collectionAddress?: string | null
+      typeId?: PromiseOrValue<BigNumberish> | null,
+      collectionAddress?: PromiseOrValue<string> | null
     ): CollectionCreatedEventFilter;
     CollectionCreated(
-      typeId?: BigNumberish | null,
-      collectionAddress?: string | null
+      typeId?: PromiseOrValue<BigNumberish> | null,
+      collectionAddress?: PromiseOrValue<string> | null
     ): CollectionCreatedEventFilter;
   };
 
   estimateGas: {
     addFees(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     addFeesClaimed(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     commission(
-      collection: string,
-      amount: BigNumberish,
+      collection: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getFees(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getFees(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     addFees(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     addFeesClaimed(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     commission(
-      collection: string,
-      amount: BigNumberish,
+      collection: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getFees(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

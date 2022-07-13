@@ -24,6 +24,7 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
+  PromiseOrValue,
 } from "../common";
 
 export interface NiftyKitV2Interface extends utils.Interface {
@@ -70,32 +71,42 @@ export interface NiftyKitV2Interface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "addCollection",
-    values: [BigNumberish, string]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "addFees",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "addFeesClaimed",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "commission",
-    values: [string, BigNumberish]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "createCollection",
-    values: [BigNumberish, string, string, string, string, BigNumberish]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "getDropKitPass",
     values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "getFees", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "getFees",
+    values: [PromiseOrValue<string>]
+  ): string;
   encodeFunctionData(
     functionFragment: "getImplementation",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
@@ -108,24 +119,27 @@ export interface NiftyKitV2Interface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "setDropKitPass",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "setImplementation",
-    values: [BigNumberish, string]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "setRateOverride",
-    values: [string, BigNumberish]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(functionFragment: "setTreasury", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "setTreasury",
+    values: [PromiseOrValue<string>]
+  ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "withdraw",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
 
   decodeFunctionResult(
@@ -249,208 +263,220 @@ export interface NiftyKitV2 extends BaseContract {
 
   functions: {
     addCollection(
-      typeId: BigNumberish,
-      collection: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      typeId: PromiseOrValue<BigNumberish>,
+      collection: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     addFees(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     addFeesClaimed(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     commission(
-      collection: string,
-      amount: BigNumberish,
+      collection: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     createCollection(
-      typeId: BigNumberish,
-      name: string,
-      symbol: string,
-      treasury: string,
-      royalty: string,
-      royaltyFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      typeId: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      treasury: PromiseOrValue<string>,
+      royalty: PromiseOrValue<string>,
+      royaltyFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     getDropKitPass(overrides?: CallOverrides): Promise<[string]>;
 
-    getFees(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getFees(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     getImplementation(
-      typeId: BigNumberish,
+      typeId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
     initialize(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setDropKitPass(
-      passAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      passAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setImplementation(
-      typeId: BigNumberish,
-      implementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      typeId: PromiseOrValue<BigNumberish>,
+      implementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setRateOverride(
-      collection: string,
-      rate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      collection: PromiseOrValue<string>,
+      rate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setTreasury(
-      treasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      treasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     withdraw(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
   addCollection(
-    typeId: BigNumberish,
-    collection: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    typeId: PromiseOrValue<BigNumberish>,
+    collection: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   addFees(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   addFeesClaimed(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   commission(
-    collection: string,
-    amount: BigNumberish,
+    collection: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   createCollection(
-    typeId: BigNumberish,
-    name: string,
-    symbol: string,
-    treasury: string,
-    royalty: string,
-    royaltyFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    typeId: PromiseOrValue<BigNumberish>,
+    name: PromiseOrValue<string>,
+    symbol: PromiseOrValue<string>,
+    treasury: PromiseOrValue<string>,
+    royalty: PromiseOrValue<string>,
+    royaltyFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   getDropKitPass(overrides?: CallOverrides): Promise<string>;
 
-  getFees(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getFees(
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   getImplementation(
-    typeId: BigNumberish,
+    typeId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<string>;
 
   initialize(
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   renounceOwnership(
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setDropKitPass(
-    passAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    passAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setImplementation(
-    typeId: BigNumberish,
-    implementation: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    typeId: PromiseOrValue<BigNumberish>,
+    implementation: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setRateOverride(
-    collection: string,
-    rate: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    collection: PromiseOrValue<string>,
+    rate: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setTreasury(
-    treasury: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    treasury: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   withdraw(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     addCollection(
-      typeId: BigNumberish,
-      collection: string,
+      typeId: PromiseOrValue<BigNumberish>,
+      collection: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    addFees(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    addFees(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     addFeesClaimed(
-      amount: BigNumberish,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     commission(
-      collection: string,
-      amount: BigNumberish,
+      collection: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     createCollection(
-      typeId: BigNumberish,
-      name: string,
-      symbol: string,
-      treasury: string,
-      royalty: string,
-      royaltyFee: BigNumberish,
+      typeId: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      treasury: PromiseOrValue<string>,
+      royalty: PromiseOrValue<string>,
+      royaltyFee: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     getDropKitPass(overrides?: CallOverrides): Promise<string>;
 
-    getFees(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getFees(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     getImplementation(
-      typeId: BigNumberish,
+      typeId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -461,225 +487,234 @@ export interface NiftyKitV2 extends BaseContract {
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     setDropKitPass(
-      passAddress: string,
+      passAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setImplementation(
-      typeId: BigNumberish,
-      implementation: string,
+      typeId: PromiseOrValue<BigNumberish>,
+      implementation: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setRateOverride(
-      collection: string,
-      rate: BigNumberish,
+      collection: PromiseOrValue<string>,
+      rate: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setTreasury(treasury: string, overrides?: CallOverrides): Promise<void>;
+    setTreasury(
+      treasury: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     transferOwnership(
-      newOwner: string,
+      newOwner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    withdraw(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
   };
 
   filters: {
     "CollectionCreated(uint96,address)"(
-      typeId?: BigNumberish | null,
-      collectionAddress?: string | null
+      typeId?: PromiseOrValue<BigNumberish> | null,
+      collectionAddress?: PromiseOrValue<string> | null
     ): CollectionCreatedEventFilter;
     CollectionCreated(
-      typeId?: BigNumberish | null,
-      collectionAddress?: string | null
+      typeId?: PromiseOrValue<BigNumberish> | null,
+      collectionAddress?: PromiseOrValue<string> | null
     ): CollectionCreatedEventFilter;
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
 
     "OwnershipTransferred(address,address)"(
-      previousOwner?: string | null,
-      newOwner?: string | null
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
-      previousOwner?: string | null,
-      newOwner?: string | null
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
     addCollection(
-      typeId: BigNumberish,
-      collection: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      typeId: PromiseOrValue<BigNumberish>,
+      collection: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     addFees(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     addFeesClaimed(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     commission(
-      collection: string,
-      amount: BigNumberish,
+      collection: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     createCollection(
-      typeId: BigNumberish,
-      name: string,
-      symbol: string,
-      treasury: string,
-      royalty: string,
-      royaltyFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      typeId: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      treasury: PromiseOrValue<string>,
+      royalty: PromiseOrValue<string>,
+      royaltyFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     getDropKitPass(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getFees(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getFees(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     getImplementation(
-      typeId: BigNumberish,
+      typeId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     initialize(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setDropKitPass(
-      passAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      passAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setImplementation(
-      typeId: BigNumberish,
-      implementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      typeId: PromiseOrValue<BigNumberish>,
+      implementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setRateOverride(
-      collection: string,
-      rate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      collection: PromiseOrValue<string>,
+      rate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setTreasury(
-      treasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      treasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     withdraw(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     addCollection(
-      typeId: BigNumberish,
-      collection: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      typeId: PromiseOrValue<BigNumberish>,
+      collection: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     addFees(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     addFeesClaimed(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     commission(
-      collection: string,
-      amount: BigNumberish,
+      collection: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     createCollection(
-      typeId: BigNumberish,
-      name: string,
-      symbol: string,
-      treasury: string,
-      royalty: string,
-      royaltyFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      typeId: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      treasury: PromiseOrValue<string>,
+      royalty: PromiseOrValue<string>,
+      royaltyFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     getDropKitPass(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getFees(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getImplementation(
-      typeId: BigNumberish,
+      typeId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setDropKitPass(
-      passAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      passAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setImplementation(
-      typeId: BigNumberish,
-      implementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      typeId: PromiseOrValue<BigNumberish>,
+      implementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setRateOverride(
-      collection: string,
-      rate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      collection: PromiseOrValue<string>,
+      rate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setTreasury(
-      treasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      treasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
 }
