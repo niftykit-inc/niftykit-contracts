@@ -36,10 +36,11 @@ abstract contract BaseCollection is
     function withdraw() external {
         require(address(this).balance > 0, "0 balance");
 
+        INiftyKit niftyKit = _niftyKit;
         uint256 balance = address(this).balance;
-        uint256 fees = _niftyKit.getFees(address(this));
-        _niftyKit.addFeesClaimed(fees);
-        AddressUpgradeable.sendValue(payable(address(_niftyKit)), fees);
+        uint256 fees = niftyKit.getFees(address(this));
+        niftyKit.addFeesClaimed(fees);
+        AddressUpgradeable.sendValue(payable(address(niftyKit)), fees);
         AddressUpgradeable.sendValue(payable(_treasury), balance.sub(fees));
     }
 

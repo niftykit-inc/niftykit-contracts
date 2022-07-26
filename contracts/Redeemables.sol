@@ -28,7 +28,6 @@ contract Redeemables is ContextUpgradeable {
     );
 
     using SafeMathUpgradeable for uint256;
-    using MerkleProofUpgradeable for bytes32[];
     using ECDSAUpgradeable for bytes32;
     using CountersUpgradeable for CountersUpgradeable.Counter;
 

@@ -13,7 +13,6 @@ contract DropCollection is
     ERC721EnumerableUpgradeable
 {
     using SafeMathUpgradeable for uint256;
-    using MerkleProofUpgradeable for bytes32[];
 
     mapping(address => uint256) private _mintCount;
     bytes32 private _merkleRoot;

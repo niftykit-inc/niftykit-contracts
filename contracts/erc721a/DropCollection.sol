@@ -13,7 +13,6 @@ contract DropCollection is
     ERC721AQueryableUpgradeable
 {
     using SafeMathUpgradeable for uint256;
-    using MerkleProofUpgradeable for bytes32[];
 
     bytes32 private _merkleRoot;
     string private _tokenBaseURI;
