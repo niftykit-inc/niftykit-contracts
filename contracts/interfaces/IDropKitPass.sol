@@ -2,6 +2,11 @@
 pragma solidity ^0.8.9;
 
 interface IDropKitPass {
+    struct FeeEntry {
+        uint96 value;
+        bool isValue;
+    }
+
     /**
      * @dev Contract upgradeable initializer
      */

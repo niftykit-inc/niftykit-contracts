@@ -84,10 +84,11 @@ describe("BaseCollection", function () {
     );
 
     // redeem
-    const txRedeem = await tokenCollection["redeem(uint256,uint256,bytes)"](
+    const txRedeem = await tokenCollection.redeem(
       redeemableId,
       1,
       signature,
+      [],
       {
         value: ethers.utils.parseEther("0.01"),
       }

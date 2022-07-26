@@ -3,6 +3,7 @@ import { Signer, ContractTransaction } from "ethers";
 import { expect } from "chai";
 import { solidityKeccak256 } from "ethers/lib/utils";
 import { NiftyKitV2 } from "../typechain-types";
+import { getMerkleTreeBasic } from "./utils/merkle-tree";
 import { createTokenCollection, createNiftyKit } from "./utils/collections";
 
 async function getCount(contract: ContractTransaction) {
@@ -40,6 +41,49 @@ describe("TokenCollection (Redeemables)", function () {
     );
 
     expect(transferEvent).to.be.a("object");
+  });
+
+  it("should be able to mint sequentially", async function () {
+    const tokenCollection = await createTokenCollection(niftyKit, accounts[0]);
+
+    const txMint = await tokenCollection.mint(
+      await accounts[0].getAddress(),
+      1,
+      "foo"
+    );
+    const txMintReceipt = await txMint.wait();
+    const transferEvent = txMintReceipt.events?.find(
+      (event) => event.event === "Transfer"
+    );
+
+    expect(transferEvent?.args?.tokenId.toNumber()).to.equals(1);
+
+    const txMint2 = await tokenCollection.mint(
+      await accounts[0].getAddress(),
+      1,
+      "foo"
+    );
+    const txMintReceipt2 = await txMint2.wait();
+    const transferEvent2 = txMintReceipt2.events?.find(
+      (event) => event.event === "Transfer"
+    );
+
+    expect(transferEvent2?.args?.tokenId.toNumber()).to.equals(2);
+
+    // let's burn 1
+    await tokenCollection.burn(1);
+
+    const txMint3 = await tokenCollection.mint(
+      await accounts[0].getAddress(),
+      1,
+      "foo"
+    );
+    const txMintReceipt3 = await txMint3.wait();
+    const transferEvent3 = txMintReceipt3.events?.find(
+      (event) => event.event === "Transfer"
+    );
+
+    expect(transferEvent3?.args?.tokenId.toNumber()).to.equals(3);
   });
 
   it("should be able to create a redeemable", async function () {
@@ -115,10 +159,65 @@ describe("TokenCollection (Redeemables)", function () {
     );
 
     // redeem
-    const txRedeem = await tokenCollection["redeem(uint256,uint256,bytes)"](
+    const txRedeem = await tokenCollection.redeem(
       redeemableId,
       1,
-      signature
+      signature,
+      []
+    );
+
+    const txRedeemReceipt = await txRedeem.wait();
+    const transferEvent = txRedeemReceipt.events?.find(
+      (event) => event.event === "Transfer"
+    );
+
+    expect(transferEvent).to.be.a("object");
+  });
+
+  it("should be able to redeem a redeemable with presale", async function () {
+    const tokenCollection = await createTokenCollection(niftyKit, accounts[0]);
+
+    const redeemable = await tokenCollection.createRedeemable(
+      "foo",
+      0,
+      1,
+      1,
+      1
+    );
+    const redeemableId = await getCount(redeemable);
+    expect(redeemableId.toString()).to.be.string("0");
+    expect((await tokenCollection.totalRedeemables()).toNumber()).to.be.eq(1);
+    const redeemableObject = await tokenCollection.redeemableAt(0);
+
+    // generate signature to be stored off chain
+    const signature = await accounts[0].signMessage(
+      ethers.utils.arrayify(
+        solidityKeccak256(
+          ["uint256"],
+          [redeemableObject.nonce.add(redeemableId).toString()]
+        )
+      )
+    );
+
+    const presaleList = [];
+    for (const account of accounts) {
+      // max per each wallet is 0
+      presaleList.push(await account.getAddress());
+    }
+
+    const [merkleRoot, hexProof] = getMerkleTreeBasic(
+      presaleList,
+      presaleList[0] as string
+    );
+
+    await tokenCollection.setMerkleRoot(redeemableId, merkleRoot);
+
+    // redeem
+    const txRedeem = await tokenCollection.redeem(
+      redeemableId,
+      1,
+      signature,
+      hexProof
     );
 
     const txRedeemReceipt = await txRedeem.wait();
@@ -156,33 +255,24 @@ describe("TokenCollection (Redeemables)", function () {
 
     // redeem with wrong amount
     await expect(
-      tokenCollection["redeem(uint256,uint256,bytes)"](
-        redeemableId,
-        1,
-        signature,
-        {
-          value: ethers.utils.parseEther("0.005"),
-        }
-      )
+      tokenCollection.redeem(redeemableId, 1, signature, [], {
+        value: ethers.utils.parseEther("0.005"),
+      })
     ).to.be.revertedWith("Value incorrect");
 
     // exceed max per mint
     await expect(
-      tokenCollection["redeem(uint256,uint256,bytes)"](
-        redeemableId,
-        3,
-        signature,
-        {
-          value: ethers.utils.parseEther("0.03"),
-        }
-      )
+      tokenCollection.redeem(redeemableId, 3, signature, [], {
+        value: ethers.utils.parseEther("0.03"),
+      })
     ).to.be.revertedWith("Exceeded max per mint");
 
     // redeem
-    const txRedeem = await tokenCollection["redeem(uint256,uint256,bytes)"](
+    const txRedeem = await tokenCollection.redeem(
       redeemableId,
       1,
       signature,
+      [],
       {
         value: ethers.utils.parseEther("0.01"),
       }
@@ -190,14 +280,9 @@ describe("TokenCollection (Redeemables)", function () {
 
     // exceed max per wallet
     await expect(
-      tokenCollection["redeem(uint256,uint256,bytes)"](
-        redeemableId,
-        1,
-        signature,
-        {
-          value: ethers.utils.parseEther("0.01"),
-        }
-      )
+      tokenCollection.redeem(redeemableId, 1, signature, [], {
+        value: ethers.utils.parseEther("0.01"),
+      })
     ).to.be.revertedWith("Exceeded max per wallet");
 
     const txRedeemReceipt = await txRedeem.wait();
@@ -234,10 +319,11 @@ describe("TokenCollection (Redeemables)", function () {
     );
 
     // redeem
-    const txRedeem = await tokenCollection["redeem(uint256,uint256,bytes)"](
+    const txRedeem = await tokenCollection.redeem(
       redeemableId,
       1,
       signature,
+      [],
       {
         value: ethers.utils.parseEther("0.01"),
       }
@@ -245,14 +331,9 @@ describe("TokenCollection (Redeemables)", function () {
 
     // exceed max amount
     await expect(
-      tokenCollection["redeem(uint256,uint256,bytes)"](
-        redeemableId,
-        2,
-        signature,
-        {
-          value: ethers.utils.parseEther("0.02"),
-        }
-      )
+      tokenCollection.redeem(redeemableId, 2, signature, [], {
+        value: ethers.utils.parseEther("0.02"),
+      })
     ).to.be.revertedWith("Exceeded max amount");
 
     const txRedeemReceipt = await txRedeem.wait();
@@ -266,14 +347,9 @@ describe("TokenCollection (Redeemables)", function () {
     await tokenCollection.invalidate(redeemableId);
 
     await expect(
-      tokenCollection["redeem(uint256,uint256,bytes)"](
-        redeemableId,
-        1,
-        signature,
-        {
-          value: ethers.utils.parseEther("0.01"),
-        }
-      )
+      tokenCollection.redeem(redeemableId, 1, signature, [], {
+        value: ethers.utils.parseEther("0.01"),
+      })
     ).to.be.revertedWith("Invalid signature");
   });
 
@@ -303,10 +379,11 @@ describe("TokenCollection (Redeemables)", function () {
     );
 
     // redeem
-    const txRedeem = await tokenCollection["redeem(uint256,uint256,bytes)"](
+    const txRedeem = await tokenCollection.redeem(
       redeemableId,
       1,
       signature,
+      [],
       {
         value: ethers.utils.parseEther("0.01"),
       }
@@ -332,14 +409,9 @@ describe("TokenCollection (Redeemables)", function () {
     );
 
     await expect(
-      tokenCollection["redeem(uint256,uint256,bytes)"](
-        redeemableId,
-        1,
-        signature,
-        {
-          value: ethers.utils.parseEther("0.01"),
-        }
-      )
+      tokenCollection.redeem(redeemableId, 1, signature, [], {
+        value: ethers.utils.parseEther("0.01"),
+      })
     ).to.be.revertedWith("Not active");
   });
 });
