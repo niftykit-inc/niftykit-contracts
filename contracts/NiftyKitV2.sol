@@ -27,6 +27,11 @@ contract NiftyKitV2 is Initializable, OwnableUpgradeable, INiftyKit {
     mapping(address => INiftyKit.Entry) private _rateOverride;
     IDropKitPass private _dropKitPass;
 
+    /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+        _disableInitializers();
+    }
+
     function initialize() public initializer {
         __Ownable_init();
         _treasury = _msgSender();

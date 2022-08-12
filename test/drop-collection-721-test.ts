@@ -1,16 +1,11 @@
 import { expect } from "chai";
 import { BigNumber, Signer } from "ethers";
 import { ethers } from "hardhat";
-import keccak256 from "keccak256";
-import MerkleTree from "merkletreejs";
 import { NiftyKitV2 } from "../typechain-types";
-import {
-  createDropCollection721,
-  createNiftyKit,
-  hashAccount,
-} from "./utils/collections";
+import { createDropCollection721, createNiftyKit } from "./utils/collections";
+import { getMerkleTree } from "./utils/merkle-tree";
 
-const salesParam = [100, 2, 100, ethers.utils.parseEther("0.01")] as const;
+const salesParam = [200, 150, 100, ethers.utils.parseEther("0.01")] as const;
 
 describe("DropCollection (721)", function () {
   let accounts: Signer[];
@@ -73,28 +68,20 @@ describe("DropCollection (721)", function () {
       presaleList.push([await account.getAddress(), 1]);
     }
 
-    const merkleTree = new MerkleTree(
-      presaleList.map(([address, allowed]) =>
-        hashAccount(address as string, allowed as number)
-      ),
-      keccak256,
-      { sortPairs: true }
+    const [merkleRoot, hexProof] = getMerkleTree(
+      presaleList,
+      presaleList[1][0] as string,
+      1
     );
-    const merkleRoot = merkleTree.getHexRoot();
 
     const txRoot = await dropCollection.setMerkleRoot(merkleRoot);
     await txRoot.wait();
 
     const txMint = await dropCollection
       .connect(accounts[1])
-      .presaleMint(
-        1,
-        1,
-        merkleTree.getHexProof(hashAccount(presaleList[1][0] as string, 1)),
-        {
-          value: salesParam[3].mul(2),
-        }
-      );
+      .presaleMint(1, 1, hexProof, {
+        value: salesParam[3].mul(2),
+      });
     const txMintReceipt = await txMint.wait();
     const transferEvent = txMintReceipt.events?.find(
       (event) => event.event === "Transfer"
@@ -122,29 +109,20 @@ describe("DropCollection (721)", function () {
       presaleList.push([await account.getAddress(), 101]);
     }
 
-    const merkleTree = new MerkleTree(
-      presaleList.map(([address, allowed]) =>
-        hashAccount(address as string, allowed as number)
-      ),
-      keccak256,
-      { sortPairs: true }
+    const [merkleRoot, hexProof] = getMerkleTree(
+      presaleList,
+      presaleList[1][0] as string,
+      101
     );
-    const merkleRoot = merkleTree.getHexRoot();
-
     const txRoot = await dropCollection.setMerkleRoot(merkleRoot);
     await txRoot.wait();
 
     // mint 1 NFT (should succeed)
     const txMint = await dropCollection
       .connect(accounts[1])
-      .presaleMint(
-        1,
-        101,
-        merkleTree.getHexProof(hashAccount(presaleList[1][0] as string, 101)),
-        {
-          value: salesParam[3].mul(2),
-        }
-      );
+      .presaleMint(1, 101, hexProof, {
+        value: salesParam[3].mul(2),
+      });
     const txMintReceipt = await txMint.wait();
     const transferEvent = txMintReceipt.events?.find(
       (event) => event.event === "Transfer"
@@ -172,30 +150,20 @@ describe("DropCollection (721)", function () {
       presaleList.push([await account.getAddress(), 101]);
     }
 
-    const merkleTree = new MerkleTree(
-      presaleList.map(([address, allowed]) =>
-        hashAccount(address as string, allowed as number)
-      ),
-      keccak256,
-      { sortPairs: true }
+    const [merkleRoot, hexProof] = getMerkleTree(
+      presaleList,
+      presaleList[1][0] as string,
+      101
     );
-    const merkleRoot = merkleTree.getHexRoot();
 
     const txRoot = await dropCollection.setMerkleRoot(merkleRoot);
     await txRoot.wait();
 
     // mint 101 NFT (should fail)
     await expect(
-      dropCollection
-        .connect(accounts[1])
-        .presaleMint(
-          101,
-          101,
-          merkleTree.getHexProof(hashAccount(presaleList[1][0] as string, 101)),
-          {
-            value: salesParam[3].mul(2),
-          }
-        )
+      dropCollection.connect(accounts[1]).presaleMint(101, 101, hexProof, {
+        value: salesParam[3].mul(2),
+      })
     ).to.be.revertedWith("Exceeded max per wallet");
   });
 
@@ -218,30 +186,20 @@ describe("DropCollection (721)", function () {
       presaleList.push([await account.getAddress(), 0]);
     }
 
-    const merkleTree = new MerkleTree(
-      presaleList.map(([address, allowed]) =>
-        hashAccount(address as string, allowed as number)
-      ),
-      keccak256,
-      { sortPairs: true }
+    const [merkleRoot, hexProof] = getMerkleTree(
+      presaleList,
+      presaleList[1][0] as string,
+      101
     );
-    const merkleRoot = merkleTree.getHexRoot();
 
     const txRoot = await dropCollection.setMerkleRoot(merkleRoot);
     await txRoot.wait();
 
     // mint 1 NFT (should fail)
     await expect(
-      dropCollection
-        .connect(accounts[1])
-        .presaleMint(
-          1,
-          0,
-          merkleTree.getHexProof(hashAccount(presaleList[1][0] as string, 0)),
-          {
-            value: salesParam[3].mul(2),
-          }
-        )
+      dropCollection.connect(accounts[1]).presaleMint(1, 0, hexProof, {
+        value: salesParam[3].mul(2),
+      })
     ).to.be.revertedWith("Exceeded max per wallet");
   });
 
@@ -264,30 +222,20 @@ describe("DropCollection (721)", function () {
       presaleList.push([await account.getAddress(), 1]);
     }
 
-    const merkleTree = new MerkleTree(
-      presaleList.map(([address, allowed]) =>
-        hashAccount(address as string, allowed as number)
-      ),
-      keccak256,
-      { sortPairs: true }
+    const [merkleRoot, hexProof] = getMerkleTree(
+      presaleList,
+      presaleList[1][0] as string,
+      101
     );
-    const merkleRoot = merkleTree.getHexRoot();
 
     const txRoot = await dropCollection.setMerkleRoot(merkleRoot);
     await txRoot.wait();
 
     // mint 2 NFT (should fail)
     await expect(
-      dropCollection
-        .connect(accounts[1])
-        .presaleMint(
-          2,
-          1,
-          merkleTree.getHexProof(hashAccount(presaleList[1][0] as string, 1)),
-          {
-            value: salesParam[3].mul(2),
-          }
-        )
+      dropCollection.connect(accounts[1]).presaleMint(2, 1, hexProof, {
+        value: salesParam[3].mul(2),
+      })
     ).to.be.revertedWith("Exceeded max per wallet");
   });
 
@@ -310,14 +258,11 @@ describe("DropCollection (721)", function () {
       presaleList.push([await account.getAddress(), 1]);
     }
 
-    const merkleTree = new MerkleTree(
-      presaleList.map(([address, allowed]) =>
-        hashAccount(address as string, allowed as number)
-      ),
-      keccak256,
-      { sortPairs: true }
+    const [merkleRoot, hexProof] = getMerkleTree(
+      presaleList,
+      presaleList[1][0] as string,
+      1
     );
-    const merkleRoot = merkleTree.getHexRoot();
 
     const txRoot = await dropCollection.setMerkleRoot(merkleRoot);
     await txRoot.wait();
@@ -325,14 +270,9 @@ describe("DropCollection (721)", function () {
     // mint the first NFT (should be successful)
     let txMint = await dropCollection
       .connect(accounts[1])
-      .presaleMint(
-        1,
-        1,
-        merkleTree.getHexProof(hashAccount(presaleList[1][0] as string, 1)),
-        {
-          value: salesParam[3].mul(2),
-        }
-      );
+      .presaleMint(1, 1, hexProof, {
+        value: salesParam[3].mul(2),
+      });
     let txMintReceipt = await txMint.wait();
     let transferEvent = txMintReceipt.events?.find(
       (event) => event.event === "Transfer"
@@ -342,16 +282,9 @@ describe("DropCollection (721)", function () {
 
     // mint the second NFT (should fail)
     await expect(
-      dropCollection
-        .connect(accounts[1])
-        .presaleMint(
-          1,
-          1,
-          merkleTree.getHexProof(hashAccount(presaleList[1][0] as string, 1)),
-          {
-            value: salesParam[3].mul(2),
-          }
-        )
+      dropCollection.connect(accounts[1]).presaleMint(1, 1, hexProof, {
+        value: salesParam[3].mul(2),
+      })
     ).to.be.revertedWith("Exceeded max per wallet");
   });
 

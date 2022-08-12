@@ -3,8 +3,8 @@ import { NiftyKitV2__factory } from "../typechain-types";
 
 async function main() {
   const [deployer] = await ethers.getSigners();
-  const proxyAddress = "0x775ecEf1c70ed299E37006f6820D6252b0E90BD6";
-  const gnosisSafe = "0x9e90CeAA29B97d5705aF9Df1Fe7863f8fF7bA70b";
+  const proxyAddress = "0xc11c2EefD856a2A18eB9Aaa9a3C5A359e4d49184";
+  const gnosisSafe = "0x7139eE4CF8e055E7466dbb27B3669aeDBe713ADe";
   const niftyKit = NiftyKitV2__factory.connect(proxyAddress, deployer);
 
   console.log("Transferring ownership of NiftyKitV2...");

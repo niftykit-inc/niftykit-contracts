@@ -6,7 +6,7 @@ import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721URIStorageUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721BurnableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/token/common/ERC2981Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
 import "../BaseCollection.sol";
 import "../Redeemables.sol";
 
@@ -19,6 +19,14 @@ contract TokenCollection is
     ERC721BurnableUpgradeable
 {
     using SafeMathUpgradeable for uint256;
+    using CountersUpgradeable for CountersUpgradeable.Counter;
+
+    CountersUpgradeable.Counter private _tokenIdCounter;
+
+    /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+        _disableInitializers();
+    }
 
     function initialize(
         string memory name_,
@@ -33,6 +41,7 @@ contract TokenCollection is
         __ERC721Burnable_init();
 
         __BaseCollection_init(treasury_, royalty_, royaltyFee_);
+        _tokenIdCounter.increment();
     }
 
     function mint(
@@ -60,27 +69,19 @@ contract TokenCollection is
         _setMerkleRoot(redeemableId, newRoot);
     }
 
+    function setTokenURI(uint256 tokenId, string memory newUri)
+        external
+        onlyOwner
+    {
+        _setTokenURI(tokenId, newUri);
+    }
+
     function invalidate(uint256 redeemableId) external onlyOwner {
         _invalidate(redeemableId);
     }
 
     function revoke(uint256 redeemableId) external onlyOwner {
         _revoke(redeemableId);
-    }
-
-    function redeem(
-        uint256 redeemableId,
-        uint256 quantity,
-        bytes calldata signature
-    ) external payable {
-        Redeemable memory redeemable = redeemableAt(redeemableId);
-
-        unchecked {
-            _totalRevenue = _totalRevenue.add(msg.value);
-        }
-        _niftyKit.addFees(msg.value);
-        _mint(_msgSender(), quantity, redeemable.tokenURI);
-        _redeem(redeemableId, quantity, signature, owner());
     }
 
     function redeem(
@@ -104,10 +105,14 @@ contract TokenCollection is
         uint256 quantity,
         string memory uri
     ) internal {
-        for (uint256 i = 0; i < quantity; i++) {
-            uint256 mintIndex = totalSupply().add(1);
-            _safeMint(to, mintIndex);
-            _setTokenURI(mintIndex, uri);
+        for (uint256 i = 0; i < quantity; ) {
+            uint256 tokenId = _tokenIdCounter.current();
+            _tokenIdCounter.increment();
+            _safeMint(to, tokenId);
+            _setTokenURI(tokenId, uri);
+            unchecked {
+                i++;
+            }
         }
     }
 

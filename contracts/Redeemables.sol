@@ -28,7 +28,6 @@ contract Redeemables is ContextUpgradeable {
     );
 
     using SafeMathUpgradeable for uint256;
-    using MerkleProofUpgradeable for bytes32[];
     using ECDSAUpgradeable for bytes32;
     using CountersUpgradeable for CountersUpgradeable.Counter;
 
@@ -77,7 +76,8 @@ contract Redeemables is ContextUpgradeable {
         uint256 redeemableId,
         uint256 quantity,
         bytes calldata signature,
-        address signer
+        address signer,
+        bytes32[] calldata proof
     ) internal {
         Redeemable memory redeemable = redeemableAt(redeemableId);
         require(redeemable.active, "Not active");
@@ -98,37 +98,23 @@ contract Redeemables is ContextUpgradeable {
                 .recover(signature) == signer,
             "Invalid signature"
         );
+        if (redeemable.merkleRoot != "") {
+            require(
+                MerkleProofUpgradeable.verify(
+                    proof,
+                    redeemable.merkleRoot,
+                    keccak256(abi.encodePacked(_msgSender()))
+                ),
+                "Invalid proof"
+            );
+        }
 
         unchecked {
-            _redeemables[redeemableId].redeemedCount = redeemable
-                .redeemedCount
-                .add(quantity);
-            _redeemedByWallet[redeemableId][_msgSender()] = _redeemedByWallet[
-                redeemableId
-            ][_msgSender()].add(quantity);
+            _redeemables[redeemableId].redeemedCount++;
+            _redeemedByWallet[redeemableId][_msgSender()]++;
         }
 
         emit TokenRedeemed(_msgSender(), redeemableId, quantity);
-    }
-
-    function _redeem(
-        uint256 redeemableId,
-        uint256 quantity,
-        bytes calldata signature,
-        address signer,
-        bytes32[] calldata proof
-    ) internal {
-        Redeemable memory redeemable = redeemableAt(redeemableId);
-        require(
-            MerkleProofUpgradeable.verify(
-                proof,
-                redeemable.merkleRoot,
-                keccak256(abi.encodePacked(_msgSender()))
-            ),
-            "Invalid proof"
-        );
-
-        _redeem(redeemableId, quantity, signature, signer);
     }
 
     function _setMerkleRoot(uint256 redeemableId, bytes32 newRoot) internal {

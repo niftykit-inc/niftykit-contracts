@@ -1,5 +1,5 @@
 import { upgrades } from "hardhat";
-import { ethers, Signer } from "ethers";
+import { Signer } from "ethers";
 import { expect } from "chai";
 import { NiftyKitV2, NiftyKitV2__factory } from "../../typechain-types";
 import { TokenCollection__factory as TokenCollection_factory } from "../../typechain-types/factories/contracts/erc721";
@@ -14,15 +14,6 @@ const IMPLEMENTATIONS = {
   3: DropCollection721a_factory,
 };
 
-export const hashAccount = (address: string, allowed: number) => {
-  return Buffer.from(
-    ethers.utils
-      .solidityKeccak256(["address", "uint256"], [address, allowed])
-      .slice(2),
-    "hex"
-  );
-};
-
 export async function createNiftyKit(signer: Signer) {
   const niftyKitFactory = new NiftyKitV2__factory(signer);
   const proxy = await upgrades.deployProxy(niftyKitFactory, {
@@ -35,13 +26,6 @@ export async function createNiftyKit(signer: Signer) {
   )) {
     const factory = new CollectionFactory(signer);
     const collection = await factory.deploy();
-    await collection.initialize(
-      "foo",
-      "bar",
-      await signer.getAddress(),
-      await signer.getAddress(),
-      500
-    );
     await niftyKit.setImplementation(implementationId, collection.address);
   }
 

@@ -3,7 +3,6 @@ pragma solidity ^0.8.9;
 
 import "erc721a-upgradeable/contracts/ERC721AUpgradeable.sol";
 import "erc721a-upgradeable/contracts/extensions/ERC721AQueryableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/token/common/ERC2981Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/cryptography/MerkleProofUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/math/SafeMathUpgradeable.sol";
 import "../BaseCollection.sol";
@@ -14,7 +13,6 @@ contract DropCollection is
     ERC721AQueryableUpgradeable
 {
     using SafeMathUpgradeable for uint256;
-    using MerkleProofUpgradeable for bytes32[];
 
     bytes32 private _merkleRoot;
     string private _tokenBaseURI;
@@ -29,12 +27,13 @@ contract DropCollection is
     bool private _presaleActive = false;
     bool private _saleActive = false;
 
+    /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+        _disableInitializers();
+    }
+
     modifier onlyMintable(uint64 quantity) {
-        require(quantity > 0, "Greater than 0");
-        require(
-            _getAux(_msgSender()) + quantity <= _maxPerWallet,
-            "Exceeded max per wallet"
-        );
+        require(quantity > 0, "Quantity is 0");
         require(
             _maxAmount > 0 ? totalSupply().add(quantity) <= _maxAmount : true,
             "Exceeded max supply"
@@ -58,8 +57,27 @@ contract DropCollection is
     function mint(uint64 quantity) external payable onlyMintable(quantity) {
         require(!_presaleActive, "Presale active");
         require(_saleActive, "Sale not active");
+        require(
+            _getAux(_msgSender()) + quantity <= _maxPerWallet,
+            "Exceeded max per wallet"
+        );
 
         _purchaseMint(quantity, _msgSender());
+    }
+
+    function mintTo(address recipient, uint64 quantity)
+        external
+        payable
+        onlyMintable(quantity)
+    {
+        require(!_presaleActive, "Presale active");
+        require(_saleActive, "Sale not active");
+        require(
+            _getAux(recipient) + quantity <= _maxPerWallet,
+            "Exceeded max per wallet"
+        );
+
+        _purchaseMint(quantity, recipient);
     }
 
     function presaleMint(
@@ -67,12 +85,11 @@ contract DropCollection is
         uint256 allowed,
         bytes32[] calldata proof
     ) external payable onlyMintable(quantity) {
+        uint256 mintQuantity = _getAux(_msgSender()) + quantity;
         require(_presaleActive, "Presale not active");
         require(_merkleRoot != "", "Presale not set");
-        require(
-            _getAux(_msgSender()) + quantity <= allowed,
-            "Exceeded max per wallet"
-        );
+        require(mintQuantity <= _maxPerWallet, "Exceeded max per wallet");
+        require(mintQuantity <= allowed, "Exceeded max per wallet");
         require(
             MerkleProofUpgradeable.verify(
                 proof,
@@ -85,14 +102,41 @@ contract DropCollection is
         _purchaseMint(quantity, _msgSender());
     }
 
+    function presaleMintTo(
+        address recipient,
+        uint64 quantity,
+        uint256 allowed,
+        bytes32[] calldata proof
+    ) external payable onlyMintable(quantity) {
+        uint256 mintQuantity = _getAux(recipient) + quantity;
+        require(_presaleActive, "Presale not active");
+        require(_merkleRoot != "", "Presale not set");
+        require(mintQuantity <= _maxPerWallet, "Exceeded max per wallet");
+        require(mintQuantity <= allowed, "Exceeded max per wallet");
+        require(
+            MerkleProofUpgradeable.verify(
+                proof,
+                _merkleRoot,
+                keccak256(abi.encodePacked(recipient, allowed))
+            ),
+            "Presale invalid"
+        );
+
+        _purchaseMint(quantity, recipient);
+    }
+
     function batchAirdrop(
         uint64[] calldata quantities,
         address[] calldata recipients
     ) external onlyOwner {
-        require(quantities.length == recipients.length);
+        uint256 length = recipients.length;
+        require(quantities.length == length, "Invalid Arguments");
 
-        for (uint64 i = 0; i < recipients.length; i++) {
-            _mint(recipients[i], quantities[i]);
+        for (uint256 i = 0; i < length; ) {
+            _safeMint(recipients[i], quantities[i]);
+            unchecked {
+                i++;
+            }
         }
     }
 
@@ -154,16 +198,13 @@ contract DropCollection is
     }
 
     function _purchaseMint(uint64 quantity, address to) internal {
-        require(quantity > 0, "Must be greater than 1");
         require(_price.mul(quantity) <= msg.value, "Value incorrect");
 
         unchecked {
             _totalRevenue = _totalRevenue.add(msg.value);
         }
 
-        uint64 mintCount = _getAux(_msgSender()) + quantity;
-        _setAux(_msgSender(), mintCount);
-
+        _setAux(_msgSender(), _getAux(_msgSender()) + quantity);
         _niftyKit.addFees(msg.value);
         _mint(to, quantity);
     }
