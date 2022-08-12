@@ -7,6 +7,19 @@ interface IDropKitPass {
         bool isValue;
     }
 
+    struct Pass {
+        uint256 price;
+        bool isValue;
+    }
+
+    event PassCreated(uint256 indexed stageId, uint96 indexed feeRate);
+
+    event PassRedeemed(
+        uint256 indexed stageId,
+        uint96 indexed feeRate,
+        bytes32 indexed hash
+    );
+
     /**
      * @dev Contract upgradeable initializer
      */
@@ -15,18 +28,15 @@ interface IDropKitPass {
         string memory symbol,
         address treasury,
         address royalty,
-        uint96 royaltyFee
+        uint96 royaltyFee,
+        uint96 defaultFeeRate
     ) external;
 
     /**
-     * @dev Mints a new token with a given fee rate
-     */
-    function mint(address to, uint96 feeRate) external;
-
-    /**
-     * @dev Batch mints tokens with a given fee rate
+     * @dev Batch mints feeRate tokens for a given stage
      */
     function batchAirdrop(
+        uint256 stageId,
         address[] calldata recipients,
         uint96[] calldata feeRates
     ) external;

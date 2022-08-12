@@ -18,6 +18,7 @@ const deployDropKitPassFn = async function (hre: HardhatRuntimeEnvironment) {
     deployerAddress,
     deployerAddress,
     500,
+    500,
   ]);
   console.log("TX: ", dropKitPass.deployTransaction.hash);
   await dropKitPass.deployed();

@@ -66,6 +66,21 @@ contract DropCollection is
         _purchaseMint(quantity, _msgSender());
     }
 
+    function mintTo(address recipient, uint64 quantity)
+        external
+        payable
+        onlyMintable(quantity)
+    {
+        require(!_presaleActive, "Presale active");
+        require(_saleActive, "Sale not active");
+        require(
+            _mintCount[recipient].add(quantity) <= _maxPerWallet,
+            "Exceeded max per wallet"
+        );
+
+        _purchaseMint(quantity, recipient);
+    }
+
     function presaleMint(
         uint64 quantity,
         uint256 allowed,
@@ -86,6 +101,29 @@ contract DropCollection is
         );
 
         _purchaseMint(quantity, _msgSender());
+    }
+
+    function presaleMintTo(
+        address recipient,
+        uint64 quantity,
+        uint256 allowed,
+        bytes32[] calldata proof
+    ) external payable onlyMintable(quantity) {
+        uint256 mintQuantity = _mintCount[recipient].add(quantity);
+        require(_presaleActive, "Presale not active");
+        require(_merkleRoot != "", "Presale not set");
+        require(mintQuantity <= _maxPerWallet, "Exceeded max per wallet");
+        require(mintQuantity <= allowed, "Exceeded max per wallet");
+        require(
+            MerkleProofUpgradeable.verify(
+                proof,
+                _merkleRoot,
+                keccak256(abi.encodePacked(recipient, allowed))
+            ),
+            "Presale invalid"
+        );
+
+        _purchaseMint(quantity, recipient);
     }
 
     function batchAirdrop(
@@ -174,7 +212,7 @@ contract DropCollection is
 
     function _mint(uint64 quantity, address to) internal {
         for (uint64 i = 0; i < quantity; ) {
-            _mint(to, totalSupply().add(1));
+            _safeMint(to, totalSupply().add(1));
             unchecked {
                 i++;
             }

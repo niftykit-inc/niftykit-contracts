@@ -11,6 +11,13 @@ export const hashAccount = (address: string, allowed: number) => {
   );
 };
 
+export const hashSignature = (hash: string) => {
+  return Buffer.from(
+    ethers.utils.solidityKeccak256(["bytes32"], [hash]).slice(2),
+    "hex"
+  );
+};
+
 export const hashAccountBasic = (address: string) => {
   return Buffer.from(
     ethers.utils.solidityKeccak256(["address"], [address]).slice(2),
@@ -47,5 +54,18 @@ export function getMerkleTreeBasic(presaleList: string[], address: string) {
   return [
     merkleTree.getHexRoot(),
     merkleTree.getHexProof(hashAccountBasic(address)),
+  ] as [string, string[]];
+}
+
+export function getMerkleTreeSignature(presaleList: string[], hash: string) {
+  const merkleTree = new MerkleTree(
+    presaleList.map((hash) => hashSignature(hash)),
+    keccak256,
+    { sortPairs: true }
+  );
+
+  return [
+    merkleTree.getHexRoot(),
+    merkleTree.getHexProof(hashSignature(hash)),
   ] as [string, string[]];
 }
